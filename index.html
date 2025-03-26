@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -17,6 +18,7 @@
                 <ul>
                     <li><a href="#about">關於我們</a></li>
                     <li><a href="#services">服務項目</a></li>
+                    <li><a href="#cases">成功案例</a></li>
                     <li><a href="#team">社群官方</a></li>
                     <li><a href="#contact">聯絡我們</a></li>
                 </ul>
@@ -91,6 +93,41 @@
         </div>
     </section>
 
+    <section id="cases">
+        <div class="container">
+            <h2>成功案例</h2>
+            <div class="cases-grid">
+                <div class="case-item" onclick="openCaseModal()">
+                    <div class="case-image">
+                        <img src="https://i.im.ge/2025/03/26/piGNYL.1.png" alt="案例1">
+                    </div>
+                    <div class="case-content">
+                        <h3>成功貸款案例</h3>
+                        <p>協助客戶成功申請180萬貸款，用於創業資金，並提供完整的還款規劃。</p>
+                        <div class="case-details">
+                            <span>貸款金額：180萬</span>
+                            <span>核准時間：3天</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-item" onclick="openCaseModal2()">
+                    <div class="case-image">
+                        <img src="https://i.im.ge/2025/03/26/piGCzJ.3.png" alt="案例2">
+                    </div>
+                    <div class="case-content">
+                        <h3>轉貸增貸成功案例</h3>
+                        <p>協助高負債客戶成功轉貸+增貸200萬，改善財務結構。</p>
+                        <div class="case-details">
+                            <span>核貸金額：200萬</span>
+                            <span>月薪：10萬</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="team">
         <div class="container">
             <h2>社群官方</h2>
@@ -149,5 +186,153 @@
             <p>&copy; 2023 御信理財. 保留所有權利.</p>
         </div>
     </footer>
+
+    <div id="case-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <h2>成功貸款 180 萬，資金運用更靈活！</h2>
+                <div class="case-details-full">
+                    <div class="case-photos">
+                        <div class="photo-grid">
+                            <div class="photo-item">
+                                <img src="https://i.im.ge/2025/03/26/piG6Uc.2.jpeg" alt="案例照片1" onclick="openPhotoPreview(this.src)">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://i.im.ge/2025/03/26/piGNYL.1.png" alt="案例照片2" onclick="openPhotoPreview(this.src)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-intro">
+                        <p>最近我們幫一位客戶成功核貸 180 萬，透過精準規劃，他順利取得資金，並確保還款壓力在可控範圍內。</p>
+                    </div>
+                    
+                    <div class="case-info">
+                        <h3>📌 方案細節如下：</h3>
+                        <ul>
+                            <li>✅ <strong>核准金額：</strong>180 萬</li>
+                            <li>✅ <strong>分期期數：</strong>60 期，每月月付 40,040 元</li>
+                            <li>✅ <strong>綁約期限：</strong>20 期，確保穩定貸款條件</li>
+                            <li>✅ <strong>開辦費：</strong>1.5%（27,000 元）</li>
+                            <li>✅ <strong>第一期月付：</strong>40,450 元</li>
+                            <li>✅ <strong>實際撥款金額：</strong>1,732,960 元（扣除開辦費後）</li>
+                        </ul>
+                    </div>
+
+                    <div class="case-additional">
+                        <h3>此外，客戶當場支付：</h3>
+                        <ul>
+                            <li>💰 <strong>代書費：</strong>10,000 元</li>
+                            <li>💰 <strong>車馬費：</strong>3,000 元（撥款後現金支付）</li>
+                        </ul>
+                    </div>
+
+                    <div class="case-result">
+                        <p>這次成功核貸，不僅讓客戶順利取得資金，也確保整體貸款結構合理，幫助他在不影響生活品質的情況下，靈活運用資金！</p>
+                    </div>
+
+                    <div class="case-cta">
+                        <p>如果你也有貸款需求，歡迎私訊，我們會根據你的條件量身打造最適合的貸款方案！</p>
+                        <a href="#contact" class="cta-button" onclick="document.getElementById('case-modal').style.display='none';">立即諮詢</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="case-modal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <h2>薪資穩定但負債較高？如何成功轉貸+增貸，提升資金運用空間！</h2>
+                <div class="case-details-full">
+                    <div class="case-photos">
+                        <div class="photo-grid">
+                            <div class="photo-item">
+                                <img src="https://i.im.ge/2025/03/26/piGCzJ.3.png" alt="案例照片1" onclick="openPhotoPreview(this.src)">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://i.im.ge/2025/03/26/piGxOy.4.png" alt="案例照片2" onclick="openPhotoPreview(this.src)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-intro">
+                        <p>最近有位客戶詢問：他是一名律師，目前薪資穩定，在事務所工作一年後轉職為公司法律顧問，薪資提升至10萬。雖然收入不錯，但因為過去信用卡辦得較多，聯徵分數僅500分，加上學貸40萬、信貸80萬，雖然貸款都正常繳款，但仍擔心影響轉貸與增貸的成功率，希望能申請到200萬資金來做財務規劃。</p>
+                    </div>
+                    
+                    <div class="case-info">
+                        <h3>📌 客戶條件分析：</h3>
+                        <ul>
+                            <li>✅ <strong>職業：</strong>公司法律顧問</li>
+                            <li>✅ <strong>月薪：</strong>10萬</li>
+                            <li>✅ <strong>聯徵分數：</strong>500分</li>
+                            <li>✅ <strong>現有負債：</strong>學貸40萬、信貸80萬</li>
+                            <li>✅ <strong>還款紀錄：</strong>正常按時繳款</li>
+                            <li>✅ <strong>需求金額：</strong>200萬</li>
+                        </ul>
+                    </div>
+
+                    <div class="case-result">
+                        <p>透過我們的專業評估與規劃，成功協助客戶取得所需資金，並改善整體財務結構！</p>
+                    </div>
+
+                    <div class="case-cta">
+                        <p>如果你也想進行債務整合或申請增貸，歡迎諮詢，我們會根據您的條件量身打造最適合的方案！</p>
+                        <a href="#contact" class="cta-button" onclick="document.getElementById('case-modal2').style.display='none';">立即諮詢</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="photo-preview-modal" class="modal photo-preview">
+        <div class="modal-content photo-preview-content">
+            <span class="close" onclick="closePhotoPreview()">&times;</span>
+            <img id="preview-image" src="" alt="預覽照片">
+        </div>
+    </div>
+
+    <script>
+    function openCaseModal() {
+        document.getElementById('case-modal').style.display = 'block';
+    }
+
+    function openCaseModal2() {
+        document.getElementById('case-modal2').style.display = 'block';
+    }
+
+    function openPhotoPreview(src) {
+        var previewModal = document.getElementById('photo-preview-modal');
+        var previewImage = document.getElementById('preview-image');
+        previewImage.src = src;
+        previewModal.style.display = 'block';
+    }
+
+    function closePhotoPreview() {
+        document.getElementById('photo-preview-modal').style.display = 'none';
+    }
+
+    document.querySelectorAll('.close').forEach(function(closeBtn) {
+        closeBtn.onclick = function() {
+            this.closest('.modal').style.display = 'none';
+        }
+    });
+
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            document.querySelectorAll('.modal').forEach(function(modal) {
+                modal.style.display = 'none';
+            });
+        }
+    });
+    </script>
 </body>
 </html> 
