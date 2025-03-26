@@ -63,15 +63,26 @@ nav ul li a:hover {
 }
 
 /* 首頁區 */
-#hero {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), #000000;
-    background-size: cover;
-    background-position: center;
+.hero {
+    background-color: #1a1a1a;  /* 改為純色背景 */
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: white;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
 #hero .container {
