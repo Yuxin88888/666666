@@ -64,8 +64,11 @@ nav ul li a:hover {
 
 /* 首頁區 */
 .hero {
-    background-color: #1a1a1a;  /* 改為純色背景 */
-    height: 100vh;
+    background-image: url('https://i.im.ge/2025/03/26/piGco6.hero-bg.jpeg');
+    background-size: cover;  /* 確保圖片覆蓋整個區域 */
+    background-position: center;  /* 圖片置中 */
+    background-repeat: no-repeat;  /* 不重複 */
+    height: 100vh;  /* 全螢幕高度 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -81,18 +84,14 @@ nav ul li a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);  /* 半透明黑色遮罩 */
     z-index: 1;
 }
 
+/* 確保內容在遮罩層之上 */
 #hero .container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
     position: relative;
-    left: -5%;
-    top: -10%;
+    z-index: 2;
 }
 
 #hero h2 {
