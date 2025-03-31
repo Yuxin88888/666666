@@ -27,7 +27,7 @@ git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
 ## 部署
 
 網站通過GitHub Pages部署，訪問地址：
-https://YOUR_USERNAME.github.io/REPO_NAME
+https://yuxin88888.github.io/666666/
 
 ## 維護
 
