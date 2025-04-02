@@ -1,17 +1,53 @@
 /* 基本設定 */
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     line-height: 1.6;
     color: #fff;
     background-color: #1a1a1a;
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
 }
 
+/* 添加平滑滾動效果 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 優化容器樣式 */
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 添加漸變背景效果 */
+#hero {
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://i.im.ge/2025/03/26/piGco6.hero-bg.jpeg') center/cover no-repeat;
+    z-index: -1;
+    animation: zoomEffect 20s infinite alternate;
+}
+
+@keyframes zoomEffect {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
 }
 
 /* 標題 */
@@ -26,6 +62,15 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+header.scroll-down {
+    transform: translateY(-100%);
+}
+
+header.scroll-up {
+    transform: translateY(0);
 }
 
 .logo-nav {
@@ -106,17 +151,41 @@ nav ul li a:hover {
     margin-bottom: 30px;
 }
 
+/* 優化按鈕樣式 */
 .cta-button {
-    background-color: #4CAF50;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
     color: #fff;
     padding: 15px 30px;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
 }
 
 .cta-button:hover {
-    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.cta-button:hover::after {
+    width: 300px;
+    height: 300px;
 }
 
 /* 各區塊樣式 */
@@ -139,17 +208,30 @@ section {
     margin-top: 40px;
 }
 
+/* 優化服務項目卡片 */
 .service-item {
-    background-color: #2a2a2a;
+    background: linear-gradient(145deg, #2a2a2a, #333);
     padding: 30px;
     border-radius: 15px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.service-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+.service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.service-item:hover::before {
+    transform: translateX(100%);
 }
 
 .service-icon {
@@ -183,17 +265,30 @@ section {
     margin-top: 50px;
 }
 
+/* 優化社群媒體卡片 */
 .social-item {
-    background-color: #2a2a2a;
+    background: linear-gradient(145deg, #2a2a2a, #333);
     padding: 40px;
     border-radius: 15px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.social-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+.social-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.social-item:hover::before {
+    transform: translateX(100%);
 }
 
 .social-item a {
@@ -361,16 +456,29 @@ footer {
     margin-top: 40px;
 }
 
+/* 優化案例卡片 */
 .case-item {
-    background-color: #2a2a2a;
+    background: linear-gradient(145deg, #2a2a2a, #333);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.case-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+.case-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.case-item:hover::after {
+    opacity: 1;
 }
 
 .case-image {
@@ -434,22 +542,17 @@ footer {
     backdrop-filter: blur(5px);
 }
 
+/* 優化模態視窗 */
 .modal-content {
-    background-color: #2a2a2a;
-    margin: 2% auto;
-    padding: 20px;
+    background: linear-gradient(145deg, #2a2a2a, #333);
     border-radius: 15px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     animation: modalSlideIn 0.3s ease-out;
-    overflow-y: auto;
 }
 
 @keyframes modalSlideIn {
     from {
-        transform: translateY(-100px);
+        transform: translateY(-50px);
         opacity: 0;
     }
     to {
@@ -458,150 +561,75 @@ footer {
     }
 }
 
-.modal-content::-webkit-scrollbar {
-    width: 8px;
+/* 優化滾動條 */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.modal-content::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 4px;
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
 }
 
-.modal-content::-webkit-scrollbar-thumb {
-    background: #4CAF50;
-    border-radius: 4px;
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border-radius: 5px;
 }
 
-.modal-content::-webkit-scrollbar-thumb:hover {
-    background: #45a049;
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #45a049, #4CAF50);
 }
 
-.close {
-    position: sticky;
-    top: 0;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s;
-    z-index: 1001;
-    padding: 5px;
-    background-color: #2a2a2a;
-}
-
-.close:hover {
-    color: #fff;
-}
-
-.modal-body {
-    padding: 10px;
-}
-
-.case-details-full {
-    display: grid;
-    gap: 20px;
-    margin-top: 15px;
-}
-
-.case-info ul, .case-process ol {
-    list-style: none;
-    padding: 0;
-}
-
-.case-info li, .case-process li {
-    margin: 10px 0;
-    color: #ccc;
-}
-
-.case-info strong {
-    color: #4CAF50;
-}
-
-.case-result {
-    background: rgba(76, 175, 80, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid rgba(76, 175, 80, 0.2);
-}
-
-.case-result p {
-    color: #ccc;
-    line-height: 1.6;
-}
-
-/* 添加指針樣式，表示可點擊 */
-.case-item {
-    cursor: pointer;
-}
-
-/* 響應式設計 */
+/* 添加響應式優化 */
 @media (max-width: 768px) {
-    .modal-content {
-        margin: 5% auto;
-        width: 95%;
-        max-height: 85vh;
+    .container {
+        padding: 0 15px;
     }
     
-    .modal-body {
-        padding: 5px;
+    .service-item, .case-item, .social-item {
+        margin: 10px 0;
+    }
+    
+    .cta-button {
+        width: 100%;
+        text-align: center;
     }
 }
 
-/* 更新彈出視窗樣式 */
-.case-intro {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: rgba(76, 175, 80, 0.1);
-    border-radius: 10px;
-    border: 1px solid rgba(76, 175, 80, 0.2);
+/* 添加載入動畫 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.case-intro p {
-    color: #fff;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin: 0;
+.service-item, .case-item, .social-item {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
 }
 
-.case-info, .case-additional {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+.service-item:nth-child(1) { animation-delay: 0.1s; }
+.service-item:nth-child(2) { animation-delay: 0.2s; }
+.service-item:nth-child(3) { animation-delay: 0.3s; }
+.service-item:nth-child(4) { animation-delay: 0.4s; }
+.service-item:nth-child(5) { animation-delay: 0.5s; }
+.service-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* 優化圖片載入 */
+img {
+    transition: opacity 0.3s ease;
 }
 
-.case-info h3, .case-additional h3 {
-    color: #4CAF50;
-    margin-bottom: 15px;
+img[loading="lazy"] {
+    opacity: 0;
 }
 
-.case-cta {
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    background: rgba(76, 175, 80, 0.1);
-    border-radius: 10px;
-}
-
-.case-cta p {
-    color: #fff;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-.case-cta .cta-button {
-    display: inline-block;
-    background: #4CAF50;
-    color: #fff;
-    padding: 12px 30px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.case-cta .cta-button:hover {
-    background: #45a049;
-    transform: translateY(-2px);
+img[loading="lazy"].loaded {
+    opacity: 1;
 }
 
 /* 照片網格樣式 */
@@ -660,4 +688,34 @@ footer {
 
 .photo-preview .close:hover {
     color: #ccc;
+}
+
+/* 返回頂部按鈕樣式 */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.scroll-to-top:active {
+    transform: translateY(1px);
 } 
