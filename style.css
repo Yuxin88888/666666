@@ -24,12 +24,28 @@ html {
 
 /* 添加漸變背景效果 */
 #hero {
-    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     position: relative;
     overflow: hidden;
+    padding: 100px 0;
 }
 
 #hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%);
+    z-index: 1;
+}
+
+#hero::after {
     content: '';
     position: absolute;
     top: 0;
@@ -107,48 +123,145 @@ nav ul li a:hover {
     color: #4CAF50;
 }
 
-/* 首頁區 */
-.hero {
-    background-image: url('https://i.im.ge/2025/03/26/piGco6.hero-bg.jpeg');
-    background-size: cover;  /* 確保圖片覆蓋整個區域 */
-    background-position: center;  /* 圖片置中 */
-    background-repeat: no-repeat;  /* 不重複 */
-    height: 100vh;  /* 全螢幕高度 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
+/* 移動端導航欄 */
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    nav ul {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: #111;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 15px 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 10px;
+        font-size: 1.1rem;
+    }
+
+    .logo-nav {
+        justify-content: space-between;
+    }
+
+    .logo {
+        height: 60px;
+    }
+}
+
+/* 添加導航欄動畫效果 */
+nav ul li a {
     position: relative;
 }
 
-.hero::before {
+nav ul li a::after {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: -5px;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);  /* 半透明黑色遮罩 */
-    z-index: 1;
+    width: 0;
+    height: 2px;
+    background: #4CAF50;
+    transition: width 0.3s ease;
 }
 
-/* 確保內容在遮罩層之上 */
-#hero .container {
-    position: relative;
-    z-index: 2;
-}
-
-#hero h2 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    text-align: center;
+nav ul li a:hover::after {
     width: 100%;
 }
 
+/* 首頁區 */
+#hero .container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+#hero h2 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInDown 1s ease-out;
+}
+
 #hero p {
+    font-size: 1.4rem;
+    margin-bottom: 40px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    animation: fadeInUp 1s ease-out;
+}
+
+#hero .cta-button {
     font-size: 1.2rem;
-    margin-bottom: 30px;
+    padding: 18px 40px;
+    animation: fadeInUp 1s ease-out 0.5s backwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    #hero h2 {
+        font-size: 2.5rem;
+    }
+
+    #hero p {
+        font-size: 1.2rem;
+    }
+
+    #hero .cta-button {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+    }
 }
 
 /* 優化按鈕樣式 */
@@ -216,6 +329,13 @@ section {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
 }
 
 .service-item::before {
@@ -238,12 +358,34 @@ section {
     font-size: 3rem;
     margin-bottom: 20px;
     color: #4CAF50;
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover .service-icon {
+    transform: scale(1.1);
 }
 
 .service-item h3 {
     color: #f8f8f8;
     margin-bottom: 15px;
     font-size: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.service-item h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.service-item:hover h3::after {
+    width: 100%;
 }
 
 .service-item p {
@@ -251,7 +393,37 @@ section {
     line-height: 1.8;
     text-align: left;
     padding-left: 20px;
+    transition: color 0.3s ease;
 }
+
+.service-item:hover p {
+    color: #fff;
+}
+
+/* 添加服務項目載入動畫 */
+.service-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: serviceItemFadeIn 0.6s ease-out forwards;
+}
+
+@keyframes serviceItemFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.service-item:nth-child(1) { animation-delay: 0.1s; }
+.service-item:nth-child(2) { animation-delay: 0.2s; }
+.service-item:nth-child(3) { animation-delay: 0.3s; }
+.service-item:nth-child(4) { animation-delay: 0.4s; }
+.service-item:nth-child(5) { animation-delay: 0.5s; }
+.service-item:nth-child(6) { animation-delay: 0.6s; }
 
 #team {
     background-color: #222;
@@ -718,4 +890,103 @@ img[loading="lazy"].loaded {
 
 .scroll-to-top:active {
     transform: translateY(1px);
+}
+
+/* 性能優化 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 優化動畫性能 */
+.service-item, .case-item, .social-item {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* 添加頁面載入動畫 */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.page-loader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #333;
+    border-radius: 50%;
+    border-top-color: #4CAF50;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 添加滾動進度條 */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #4CAF50, #45a049);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    transition: transform 0.1s ease-out;
+    z-index: 1001;
+}
+
+/* 優化移動端觸控體驗 */
+@media (hover: none) {
+    .service-item, .case-item, .social-item {
+        transition: transform 0.2s ease;
+    }
+    
+    .service-item:active, .case-item:active, .social-item:active {
+        transform: scale(0.98);
+    }
+}
+
+/* 添加深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+}
+
+/* 優化列印樣式 */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: none;
+    }
 } 
