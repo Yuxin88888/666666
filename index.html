@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -52,6 +51,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 添加載入動畫 -->
+    <div class="page-loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- 添加滾動進度條 -->
+    <div class="scroll-progress"></div>
+
+    <!-- 添加移動端導航按鈕 -->
+    <button class="mobile-nav-toggle">☰</button>
+
     <header>
         <div class="container">
             <div class="logo-nav">
@@ -497,6 +507,37 @@
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
+        });
+    });
+
+    // 頁面載入動畫
+    window.addEventListener('load', function() {
+        const loader = document.querySelector('.page-loader');
+        setTimeout(() => {
+            loader.classList.add('fade-out');
+        }, 500);
+    });
+
+    // 滾動進度條
+    window.addEventListener('scroll', function() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.querySelector('.scroll-progress').style.transform = `scaleX(${scrolled / 100})`;
+    });
+
+    // 移動端導航切換
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const nav = document.querySelector('nav ul');
+    
+    mobileNavToggle.addEventListener('click', function() {
+        nav.classList.toggle('active');
+    });
+
+    // 點擊導航連結後關閉移動端選單
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function() {
+            nav.classList.remove('active');
         });
     });
     </script>
