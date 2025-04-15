@@ -1310,37 +1310,49 @@
         .hamburger {
             display: none; /* 預設隱藏 */
             cursor: pointer;
-            padding: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: #e3f2fd; /* 淺藍色背景 */
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
-        .hamburger .line {
-            width: 30px;
-            height: 3px;
-            background: #333;
-            margin: 5px 0;
-            transition: 0.3s;
+        .menu-label {
+            color: #000; /* 黑色字體 */
+            font-size: 1rem;
+            font-weight: 500;
+            white-space: nowrap;
         }
 
-        /* 僅在移動端顯示漢堡菜單 */
         @media (max-width: 768px) {
             .hamburger {
-                display: block;
-            }
-
-            nav ul {
-                display: none; /* 移動端預設隱藏導航列 */
-                width: 100%;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                background: white;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-
-            nav.active ul {
                 display: flex;
-                flex-direction: column;
             }
+        }
+
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none !important;
+            }
+            .menu-label {
+                display: none;
+            }
+        }
+
+        .hamburger:hover {
+            background: #bbdefb; /* 懸停深色 */
+        }
+
+        .hamburger.active .line:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active .line:first-child {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.active .line:last-child {
+            transform: translateY(-8px) rotate(-45deg);
         }
 
         /* 電腦版導航樣式保持不變 */
@@ -2538,62 +2550,21 @@
             transform: rotate(10deg);
         }
 
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            padding: 0.8rem 1.2rem;
-            background: #e3f2fd; /* 淺藍色背景 */
-            border: none;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+        /* 新增按鈕激活狀態 */
+        .hamburger.active {
+            background: #bbdefb;
         }
 
-        .menu-label {
-            color: #000; /* 黑色字體 */
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .hamburger .line {
-            width: 30px;
-            height: 3px;
-            background: #000; /* 黑色線條 */
-            transition: 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .hamburger {
-                display: none !important;
-            }
-            .menu-label {
-                display: none;
-            }
+        .hamburger:focus {
+            outline: 2px solid #2196F3;
+            outline-offset: 2px;
         }
 
         .hamburger {
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
-
-        .hamburger:hover {
-            background: #bbdefb; /* 懸停深色 */
-        }
-
-        .hamburger.active .line:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active .line:first-child {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .hamburger.active .line:last-child {
-            transform: translateY(-8px) rotate(-45deg);
+        .hamburger:active {
+            transform: scale(0.95);
         }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
@@ -2689,9 +2660,6 @@
                 </a>
                 <button class="hamburger" aria-label="導航選單">
                     <span class="menu-label">選單</span>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
                 </button>
                 <ul class="nav-links">
                     <li><a href="#about">關於我們</a></li>
