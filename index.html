@@ -2614,6 +2614,68 @@
         .submenu.active {
             max-height: 500px;
         }
+
+        /* 手機版專屬優化 */
+        @media (max-width: 768px) {
+            /* 漢堡按鈕定位 */
+            .hamburger {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 1001;
+                background: rgba(255,255,255,0.9);
+                border-radius: 50%;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+
+            /* 導航菜單樣式 */
+            nav ul {
+                width: 85%;
+                padding-top: 4rem;
+                padding-bottom: 2rem;
+            }
+
+            /* 導航項目間距 */
+            nav li {
+                margin: 0.5rem 1rem;
+            }
+
+            /* 導航連結樣式 */
+            nav a {
+                padding: 1rem;
+                border-radius: 8px;
+                transition: background 0.2s ease;
+            }
+
+            nav a:hover {
+                background: rgba(0,0,0,0.05);
+            }
+
+            /* 遮罩層優化 */
+            .nav-overlay {
+                background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(2px);
+            }
+        }
+
+        /* 電腦版保持原樣 */
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none !important;
+            }
+            /* 清除手機版樣式 */
+            nav ul {
+                position: static !important;
+                width: auto !important;
+                height: auto !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            nav li {
+                margin: 0 !important;
+            }
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
@@ -3962,6 +4024,24 @@
             item.querySelector('.submenu').classList.toggle('active');
         });
     });
+    </script>
+
+    <script>
+    // 手機版專用功能
+    if (window.innerWidth <= 768) {
+        // 點擊外部關閉
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        // 視窗調整時重置
+        window.addEventListener('orientationchange', () => {
+            closeMenu();
+            setTimeout(() => nav.style.transition = 'none', 300);
+        });
+    }
     </script>
 </body>
 </html> 
