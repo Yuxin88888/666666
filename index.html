@@ -412,14 +412,11 @@
         }
 
         .nav-container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
-            position: relative;
-        }
-
-        .nav-wrapper {
-            display: contents; /* 保持原有佈局 */
+            display: flex;
+            align-items: center;
         }
 
         .logo {
@@ -493,10 +490,6 @@
             .qr-code img {
                 width: 120px;
                 height: 120px;
-            }
-
-            .nav-wrapper {
-                position: static;
             }
         }
 
@@ -1323,7 +1316,7 @@
         .hamburger .line {
             width: 30px;
             height: 3px;
-            background: #333;
+            background: #000;
             margin: 5px 0;
             transition: 0.3s;
         }
@@ -2545,73 +2538,25 @@
             transform: rotate(10deg);
         }
 
-        .hamburger {
-            display: none; /* 預設隱藏 */
-            background: #e1f0ff; /* 淺藍背景 */
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            font-size: 16px;
-            color: #000; /* 黑色字體 */
-            margin-left: auto;
+        /* 漢堡菜單懸停效果 */
+        .hamburger:hover .line {
+            background: #444;
         }
 
-        .menu-text {
-            font-family: 'Noto Sans TC', sans-serif;
-            font-weight: 500;
+        /* 漢堡菜單激活狀態 */
+        nav.active .hamburger .line {
+            background: #222;
         }
 
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex; /* 移動端顯示按鈕 */
-                align-items: center;
-                gap: 8px;
-            }
-
-            #nav-menu {
-                display: none;
-                background: #e1f0ff; /* 淺藍背景 */
-                padding: 1rem;
-            }
-
-            nav.active #nav-menu {
-                display: block;
-            }
+        /* 漢堡動畫效果 */
+        .hamburger.is-active .line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
         }
-
-        @media (min-width: 769px) {
-            .hamburger {
-                display: none !important;
-            }
-
-            #nav-menu {
-                display: flex !important;
-            }
+        .hamburger.is-active .line:nth-child(2) {
+            opacity: 0;
         }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                order: 2; /* 將按鈕移至右側 */
-            }
-
-            #nav-menu {
-                position: fixed;
-                top: 60px;
-                right: 0;
-                width: 200px;
-                height: auto;
-                background: #e1f0ff;
-                box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
-                border-radius: 4px 0 0 4px;
-                z-index: 1000;
-            }
-
-            .nav-container {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-            }
+        .hamburger.is-active .line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
         }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
@@ -2703,20 +2648,23 @@
         <nav aria-label="主要導航">
             <div class="nav-container">
                 <a href="#" class="logo">
-                    <img src="logo.png" alt="公司Logo">
+                    <img src="https://img12.pixhost.to/images/1184/580049283_logo.png" alt="御信理財 Logo" class="logo-img">
                 </a>
-                <button class="hamburger" aria-expanded="false" aria-controls="nav-menu">
-                    <span class="menu-text">選單</span>
+                <button class="hamburger" 
+                        aria-label="導航選單"
+                        aria-expanded="false"
+                        onclick="toggleMenu()">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
                 </button>
-                <div class="nav-wrapper">
-                    <ul id="nav-menu">
-                        <li><a href="#services">服務項目</a></li>
-                        <li><a href="#about">關於我們</a></li>
-                        <li><a href="#cases">成功案例</a></li>
-                        <li><a href="#social">社群官方</a></li>
-                        <li><a href="#consultation">聯絡我們</a></li>
-                    </ul>
-                </div>
+                <ul class="nav-links">
+                    <li><a href="#about">關於我們</a></li>
+                    <li><a href="#services">服務項目</a></li>
+                    <li><a href="#cases">成功案例</a></li>
+                    <li><a href="#social">社群官方</a></li>
+                    <li><a href="#consultation">聯絡我們</a></li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -3882,29 +3830,27 @@
     function initHamburger() {
         const hamburger = document.querySelector('.hamburger');
         const nav = document.querySelector('nav');
-        const menu = document.getElementById('nav-menu');
-
+        
         if (window.innerWidth <= 768) {
-            hamburger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-                hamburger.setAttribute('aria-expanded', !isExpanded);
-                menu.style.right = isExpanded ? '-200px' : '0';
+            hamburger.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                // 添加點擊動畫
+                hamburger.classList.toggle('is-active');
             });
         }
-
-        // 點擊外部區域關閉菜單
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('#nav-menu') && !e.target.closest('.hamburger')) {
-                hamburger.setAttribute('aria-expanded', 'false');
-                menu.style.right = '-200px';
-            }
-        });
     }
 
     // 視窗大小改變時重新初始化
     window.addEventListener('resize', initHamburger);
     initHamburger();
+    </script>
+
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('nav');
+        const isExpanded = nav.classList.toggle('active');
+        this.setAttribute('aria-expanded', isExpanded);
+    }
     </script>
 </body>
 </html> 
