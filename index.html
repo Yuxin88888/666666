@@ -2726,6 +2726,14 @@
                 overscroll-behavior: contain;
             }
         }
+
+        @media (max-width: 768px) {
+            nav {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+            }
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
@@ -2832,7 +2840,7 @@
                     <li><a href="#services">服務項目</a></li>
                     <li><a href="#cases">成功案例</a></li>
                     <li><a href="#social">社群官方</a></li>
-                    <li><a href="#consultation">聯絡我們</a></li>
+                    <li><a href="#consultation">線上表單</a></li>
                 </ul>
             </div>
         </nav>
