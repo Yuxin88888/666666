@@ -55,6 +55,7 @@
             height: 100vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         nav a {
@@ -1313,7 +1314,8 @@
         .hamburger {
             display: none; /* 預設隱藏 */
             cursor: pointer;
-            padding: 1rem;
+            padding: 1.5rem;
+            touch-action: manipulation;
         }
 
         .hamburger .line {
@@ -2619,6 +2621,7 @@
         @media (max-width: 768px) {
             /* 漢堡按鈕定位 */
             .hamburger {
+                display: block;
                 position: fixed;
                 top: 1rem;
                 right: 1rem;
@@ -2630,9 +2633,31 @@
 
             /* 導航菜單樣式 */
             nav ul {
-                width: 85%;
+                display: block;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                transition: left 0.3s ease;
+                z-index: 1000;
                 padding-top: 4rem;
-                padding-bottom: 2rem;
+            }
+
+            nav.active ul {
+                left: 0;
+                display: block;
+            }
+
+            /* 遮罩層優化 */
+            .nav-overlay {
+                background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(2px);
+            }
+
+            nav.active + .nav-overlay {
+                display: block;
             }
 
             /* 導航項目間距 */
@@ -2642,19 +2667,8 @@
 
             /* 導航連結樣式 */
             nav a {
+                display: block;
                 padding: 1rem;
-                border-radius: 8px;
-                transition: background 0.2s ease;
-            }
-
-            nav a:hover {
-                background: rgba(0,0,0,0.05);
-            }
-
-            /* 遮罩層優化 */
-            .nav-overlay {
-                background: rgba(0,0,0,0.4);
-                backdrop-filter: blur(2px);
             }
         }
 
@@ -2674,6 +2688,23 @@
             }
             nav li {
                 margin: 0 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                z-index: 1001; /* 高於遮罩層 */
+                transform: translateX(-100%);
+                will-change: transform;
+            }
+            nav.active ul {
+                transform: translateX(0);
+            }
+            .hamburger {
+                z-index: 1002; /* 最高層級 */
+            }
+            html.nav-active {
+                overflow: hidden;
             }
         }
     </style>
@@ -3955,9 +3986,10 @@
         nav.parentNode.insertBefore(overlay, nav.nextSibling);
 
         if (window.innerWidth <= 768) {
-            hamburger.addEventListener('click', () => {
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation(); // 阻止事件冒泡
                 nav.classList.toggle('active');
-                body.classList.toggle('no-scroll');
+                document.documentElement.classList.toggle('nav-active');
             });
 
             overlay.addEventListener('click', () => {
@@ -4040,6 +4072,24 @@
         window.addEventListener('orientationchange', () => {
             closeMenu();
             setTimeout(() => nav.style.transition = 'none', 300);
+        });
+    }
+    </script>
+
+    <script>
+    hamburger.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        if(nav.classList.contains('active')) {
+            setTimeout(() => nav.querySelector('a').focus(), 300);
+        }
+    });
+    </script>
+
+    <script>
+    function initHamburger() {
+        console.log('初始化漢堡選單');
+        hamburger.addEventListener('click', () => {
+            console.log('選單狀態:', nav.classList.contains('active'));
         });
     }
     </script>
