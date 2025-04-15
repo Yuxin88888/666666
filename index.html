@@ -2537,6 +2537,64 @@
         .quick-btn.line:hover .line-icon {
             transform: rotate(10deg);
         }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 0.8rem 1.2rem;
+            background: #e3f2fd; /* 淺藍色背景 */
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .menu-label {
+            color: #000; /* 黑色字體 */
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .hamburger .line {
+            width: 30px;
+            height: 3px;
+            background: #000; /* 黑色線條 */
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none !important;
+            }
+            .menu-label {
+                display: none;
+            }
+        }
+
+        .hamburger {
+            transition: background 0.3s ease;
+        }
+
+        .hamburger:hover {
+            background: #bbdefb; /* 懸停深色 */
+        }
+
+        .hamburger.active .line:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active .line:first-child {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.active .line:last-child {
+            transform: translateY(-8px) rotate(-45deg);
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
@@ -2629,10 +2687,11 @@
                 <a href="#" class="logo">
                     <img src="https://img12.pixhost.to/images/1184/580049283_logo.png" alt="御信理財 Logo" class="logo-img">
                 </a>
-                <button class="hamburger" aria-label="行動選單">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
-                    </span>
+                <button class="hamburger" aria-label="導航選單">
+                    <span class="menu-label">選單</span>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
                 </button>
                 <ul class="nav-links">
                     <li><a href="#about">關於我們</a></li>
