@@ -2,6 +2,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>御信理財 - 專業借貸服務</title>
+    <!-- Google Search Console驗證 -->
+    <meta name="google-site-verification" content="your_verification_code_here">
     <link rel="canonical" href="https://yourdomain.com/">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index,follow,snippet,archive">
@@ -3628,6 +3630,16 @@
       }
     };
     checkLinks();
+    </script>
+
+    <script>
+    // 自動提交新頁面到Google
+    if(navigator.sendBeacon) {
+        window.addEventListener('load', () => {
+            const url = window.location.href;
+            fetch(`https://www.google.com/ping?sitemap=https://yourdomain.com/sitemap.xml`);
+        });
+    }
     </script>
 </body>
 </html> 
