@@ -1310,49 +1310,37 @@
         .hamburger {
             display: none; /* 預設隱藏 */
             cursor: pointer;
-            padding: 0.8rem 1.5rem;
-            background: #e3f2fd; /* 淺藍色背景 */
-            border: none;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
+            padding: 1rem;
         }
 
-        .menu-label {
-            color: #000; /* 黑色字體 */
-            font-size: 1rem;
-            font-weight: 500;
-            white-space: nowrap;
+        .hamburger .line {
+            width: 30px;
+            height: 3px;
+            background: #333;
+            margin: 5px 0;
+            transition: 0.3s;
         }
 
+        /* 僅在移動端顯示漢堡菜單 */
         @media (max-width: 768px) {
             .hamburger {
+                display: block;
+            }
+
+            nav ul {
+                display: none; /* 移動端預設隱藏導航列 */
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: white;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            nav.active ul {
                 display: flex;
+                flex-direction: column;
             }
-        }
-
-        @media (min-width: 769px) {
-            .hamburger {
-                display: none !important;
-            }
-            .menu-label {
-                display: none;
-            }
-        }
-
-        .hamburger:hover {
-            background: #bbdefb; /* 懸停深色 */
-        }
-
-        .hamburger.active .line:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active .line:first-child {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .hamburger.active .line:last-child {
-            transform: translateY(-8px) rotate(-45deg);
         }
 
         /* 電腦版導航樣式保持不變 */
@@ -2550,21 +2538,48 @@
             transform: rotate(10deg);
         }
 
-        /* 新增按鈕激活狀態 */
-        .hamburger.active {
-            background: #bbdefb;
-        }
-
-        .hamburger:focus {
-            outline: 2px solid #2196F3;
-            outline-offset: 2px;
-        }
-
         .hamburger {
-            transition: all 0.3s ease;
+            display: none; /* 預設隱藏 */
+            background: #e1f0ff; /* 淺藍背景 */
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 16px;
+            color: #000; /* 黑色字體 */
+            margin-left: auto;
         }
-        .hamburger:active {
-            transform: scale(0.95);
+
+        .menu-text {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex; /* 移動端顯示按鈕 */
+                align-items: center;
+                gap: 8px;
+            }
+
+            #nav-menu {
+                display: none;
+                background: #e1f0ff; /* 淺藍背景 */
+                padding: 1rem;
+            }
+
+            nav.active #nav-menu {
+                display: block;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none !important;
+            }
+
+            #nav-menu {
+                display: flex !important;
+            }
         }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
@@ -2654,16 +2669,13 @@
 <body>
     <header>
         <nav aria-label="主要導航">
+            <button class="hamburger" aria-expanded="false" aria-controls="nav-menu">
+                <span class="menu-text">選單</span>
+            </button>
             <div class="nav-container">
-                <a href="#" class="logo">
-                    <img src="https://img12.pixhost.to/images/1184/580049283_logo.png" alt="御信理財 Logo" class="logo-img">
-                </a>
-                <button class="hamburger" aria-label="導航選單">
-                    <span class="menu-label">選單</span>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="#about">關於我們</a></li>
+                <ul id="nav-menu">
                     <li><a href="#services">服務項目</a></li>
+                    <li><a href="#about">關於我們</a></li>
                     <li><a href="#cases">成功案例</a></li>
                     <li><a href="#social">社群官方</a></li>
                     <li><a href="#consultation">聯絡我們</a></li>
@@ -3833,10 +3845,13 @@
     function initHamburger() {
         const hamburger = document.querySelector('.hamburger');
         const nav = document.querySelector('nav');
-        
+        const menu = document.getElementById('nav-menu');
+
         if (window.innerWidth <= 768) {
             hamburger.addEventListener('click', () => {
-                nav.classList.toggle('active');
+                const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                hamburger.setAttribute('aria-expanded', !isExpanded);
+                menu.style.display = isExpanded ? 'none' : 'block';
             });
         }
     }
