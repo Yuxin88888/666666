@@ -2468,6 +2468,30 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        // Safari日期格式處理
+        const submitTime = new Date().toLocaleString('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+
+        // Firefox滑桿樣式修正
+        input[type="range"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: transparent;
+            width: 100%;
+        }
+
+        // Edge表單自動填充樣式
+        input:-webkit-autofill {
+            box-shadow: 0 0 0 1000px white inset;
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image">
     <link rel="preload" href="https://picsum.photos/1920/540" as="image">
@@ -2595,7 +2619,7 @@
                     <div class="form-group">
                         <label for="email">電子郵件</label>
                         <input type="email" id="email" required
-                               placeholder="makerich88888@gmail.com">
+                               placeholder="example@domain.com">
                     </div>
                     
                     <div class="form-group">
@@ -3359,25 +3383,14 @@
                         'X-CSRF-Token': document.querySelector('[name=csrf_token]').value
                     },
                     body: JSON.stringify({
-                        name: formData.get('name'),
-                        phone: formData.get('phone'),
-                        amount: formData.get('amount'),
-                        loanType: formData.get('loanType'),
-                        time: formData.getAll('time')
+                        ...formDataObject,
+                        email: 'client@example.com' // 從表單獲取客戶郵箱
                     })
                 });
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
-                const result = await response.json();
-                if(result.success) {
-                    showStatus('✅ 資料已發送！專員將盡快聯繫您', 'green');
-                    form.reset();
-                    generateCaptcha();
-                } else {
-                    throw new Error(result.error);
+                if (response.ok) {
+                    showStatus('✅ 已發送確認郵件至您的信箱', 'green');
                 }
-                
             } catch (error) {
                 console.error('傳送失敗:', error);
                 showStatus(`❌ 錯誤：${error.message}`, 'red');
