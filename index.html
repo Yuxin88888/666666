@@ -2,7 +2,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>御信理財 - 專業借貸服務</title>
-    <link rel="canonical" href="https://your-domain.com">
+    <link rel="canonical" href="https://yourdomain.com/">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta property="og:title" content="御信理財 - 專業借貸服務">
+    <meta property="og:description" content="御信理財提供多元貸款方案，包含信用貸款、房屋貸款、企業融資等專業服務，最快3天核貸，利率1.68%起">
+    <meta property="og:image" content="https://yourdomain.com/images/og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta name="twitter:card" content="summary_large_image">
     <style>
         * {
             margin: 0;
@@ -2437,6 +2444,39 @@
     <!-- 在<head>新增排版強化meta -->
     <meta name="supported-color-schemes" content="light only">
     <meta name="format-detection" content="telephone=no">
+
+    <!-- 優化1: 預加載關鍵資源 -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="main.js" as="script">
+
+    <!-- 優化2: 添加核心網頁指標監測 -->
+    <script>
+    const vitalsUrl = 'https://vitals.vercel-analytics.com/v1/vitals';
+    function sendToAnalytics(metric) {
+        const body = {
+            dsn: "YOUR_DSN_ID",
+            id: metric.id,
+            page: window.location.pathname,
+            href: window.location.href,
+            event_name: metric.name,
+            value: metric.value.toFixed(2),
+            speed: navigator.connection?.effectiveType || ''
+        };
+        navigator.sendBeacon(vitalsUrl, JSON.stringify(body));
+    }
+    ['CLS', 'FID', 'LCP', 'FCP', 'TTFB'].forEach(metric => {
+        webVitals[metric](sendToAnalytics);
+    });
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXX');
+    </script>
 </head>
 <body>
     <header>
@@ -3248,22 +3288,37 @@
         }
 
         // 表單提交驗證
-        document.querySelector('.consult-form').addEventListener('submit', (e) => {
+        document.querySelector('.consult-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const input = document.getElementById('captcha').value.toUpperCase();
             
-            if(input !== currentCaptcha) {
-                alert('驗證碼錯誤，請重新輸入');
-                generateCaptcha();
-                document.getElementById('captcha').value = '';
+            // 測試案例1: 空值提交
+            if(!document.getElementById('name').value) {
+                showStatus('❌ 姓名為必填字段', 'red');
                 return;
             }
-            
-            // 驗證通過後執行原有提交邏輯
-            alert('表單已提交，我們將盡快與您聯繫！');
+
+            // 測試案例2: 驗證碼驗證
+            const inputCode = document.getElementById('captcha').value.toUpperCase();
+            if(inputCode !== currentCaptcha) {
+                showStatus('❌ 驗證碼錯誤', 'red');
+                generateCaptcha();
+                return;
+            }
+
+            // 測試案例3: 模擬成功提交
+            showStatus('✅ 表單提交成功！3秒後重置...', 'green');
+            await new Promise(r => setTimeout(r, 3000));
             e.target.reset();
             generateCaptcha();
         });
+
+        function showStatus(msg, color) {
+            const statusEl = document.getElementById('formStatus');
+            statusEl.style.display = 'block';
+            statusEl.style.color = color;
+            statusEl.textContent = msg;
+            setTimeout(() => statusEl.style.display = 'none', 3000);
+        }
 
         // 在現有的導航列互動效果代碼區塊後新增
         document.querySelector('.logo').addEventListener('click', function(e) {
@@ -3555,6 +3610,24 @@
                 document.getElementById('loanModal').style.display = 'none';
             }
         });
+    </script>
+
+    <!-- 快速檢查腳本 -->
+    <script>
+    const checkLinks = async () => {
+      const links = [...document.querySelectorAll('img, link[rel="stylesheet"]')]
+        .map(el => el.href || el.src);
+      
+      for(const url of links) {
+        try {
+          const res = await fetch(url, {method: 'HEAD'});
+          console.log(`${url}: ${res.ok ? '✅' : '❌'}`);
+        } catch {
+          console.log(`${url}: ❌`);
+        }
+      }
+    };
+    checkLinks();
     </script>
 </body>
 </html> 
