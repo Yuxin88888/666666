@@ -52,6 +52,9 @@
             justify-content: center;
             list-style: none;
             gap: 1.5rem;
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         nav a {
@@ -2588,6 +2591,29 @@
         .no-scroll {
             overflow: hidden;
         }
+
+        @media (prefers-color-scheme: dark) {
+            .nav-overlay {
+                background: rgba(0,0,0,0.7);
+            }
+            nav ul {
+                background: #1a1a1a;
+                box-shadow: 2px 0 10px rgba(255,255,255,0.1);
+            }
+            .hamburger .line {
+                background: #fff;
+            }
+        }
+
+        /* 二級菜單樣式 */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .submenu.active {
+            max-height: 500px;
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
@@ -2683,6 +2709,7 @@
                 <button class="hamburger" 
                         aria-label="導航選單"
                         aria-expanded="false"
+                        aria-controls="main-nav"
                         onclick="toggleMenu()">
                     <div class="line"></div>
                     <div class="line"></div>
@@ -3896,7 +3923,45 @@
         const nav = document.querySelector('nav');
         const isExpanded = nav.classList.toggle('active');
         this.setAttribute('aria-expanded', isExpanded);
+        if(isExpanded) {
+            nav.querySelector('a').focus();
+        }
     }
+    </script>
+
+    <script>
+    let isAnimating = false;
+    function initHamburger() {
+        hamburger.addEventListener('click', () => {
+            if(isAnimating) return;
+            isAnimating = true;
+            nav.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+            setTimeout(() => isAnimating = false, 300);
+        });
+    }
+    </script>
+
+    <script>
+    let touchStartX = 0;
+    nav.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+    });
+    nav.addEventListener('touchmove', e => {
+        const touchX = e.touches[0].clientX;
+        if(touchX - touchStartX > 50) { // 右滑超過50px
+            closeMenu();
+        }
+    });
+    </script>
+
+    <script>
+    document.querySelectorAll('.has-submenu').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            item.querySelector('.submenu').classList.toggle('active');
+        });
+    });
     </script>
 </body>
 </html> 
