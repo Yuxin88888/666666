@@ -2707,6 +2707,25 @@
                 overflow: hidden;
             }
         }
+
+        @media (max-width: 768px) {
+            /* 提升安卓滑動檢測 */
+            nav {
+                touch-action: pan-y;
+            }
+
+            /* 橫屏模式適配 */
+            @media (orientation: landscape) {
+                nav ul {
+                    width: 50%;
+                }
+            }
+
+            /* iOS橡皮筋效果限制 */
+            body.nav-active {
+                overscroll-behavior: contain;
+            }
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
