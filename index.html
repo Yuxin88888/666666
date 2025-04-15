@@ -806,33 +806,26 @@
         /* 新增快捷按鈕樣式 */
         .quick-access {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            bottom: 3rem;
+            right: 3rem;
             z-index: 1000;
         }
 
         .quick-btn {
-            width: 56px;
-            height: 56px;
+            width: 80px;
+            height: 80px;
+            background: #06C755;
             border-radius: 50%;
-            border: 2px solid transparent !important;
-            background: var(--primary-color);
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
 
         .quick-btn:hover {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
 
         .quick-btn:active {
@@ -859,14 +852,16 @@
 
         @media (max-width: 768px) {
             .quick-access {
-                bottom: 1rem;
+                bottom: 2rem;
                 right: 1rem;
             }
-            
             .quick-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
+                width: 70px;
+                height: 70px;
+            }
+            .line-icon {
+                width: 45px;
+                height: 45px;
             }
         }
 
@@ -915,12 +910,14 @@
 
         /* 修改社群按鈕顏色 */
         .quick-btn.line {
-            background: linear-gradient(135deg, #00c300 0%, #00a300 100%) !important;
-            border-color: #009900 !important;
+            background: #06C755 !important;
+            border: 2px solid white !important;
         }
 
         .quick-btn.line:hover {
-            box-shadow: 0 4px 12px rgba(0,195,0,0.3);
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            background: #05B34A !important;
         }
 
         .quick-btn.line:hover .line-icon {
@@ -929,11 +926,13 @@
 
         /* 修改LINE圖示樣式 */
         .line-icon {
-            width: 60%;
-            height: 60%;
+            width: 60px !important;
+            height: 60px !important;
             object-fit: contain;
             border-radius: 50%;
             transition: all 0.3s ease;
+            padding: 5px;
+            background: white;
         }
 
         .quick-btn.line {
@@ -2535,8 +2534,40 @@
                 content: url(https://img12.pixhost.to/images/1184/580049283_logo-mobile.png);
             }
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .consultation-anchor {
+            scroll-margin-top: 100px; /* 根據導航列高度調整 */
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .consultation-anchor {
+                scroll-margin-top: 80px;
+            }
+        }
+
+        a:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .line-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .quick-btn.line:hover .line-icon {
+            transform: rotate(10deg);
+        }
     </style>
-    <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image">
+    <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
     <link rel="preload" href="https://picsum.photos/1920/540" as="image">
     <link rel="preconnect" href="https://lin.ee">
@@ -2593,12 +2624,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="御信理財線上諮詢表單">
     <meta name="twitter:description" content="專業貸款顧問1對1服務，量身規劃最佳貸款方案">
-    <meta name="twitter:image" content="https://img12.pixhost.to/images/1184/580049283_logo.png">
+    <meta name="twitter:image" content="https://img12.pixhost.to/images/1184/580049283_twitter-card.png">
     <meta name="twitter:site" content="@your_twitter_account">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "FinancialService",
+        "priceRange": "$$",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Taipei",
+            "addressCountry": "TW"
+        },
         "name": "御信理財",
         "image": "https://img12.pixhost.to/images/1184/580049283_logo.png",
         "subjectOf": {
@@ -2610,6 +2647,9 @@
         "url": "https://yourdomain.com/"
     }
     </script>
+    <link rel="alternate" hreflang="zh-Hant-TW" href="https://yourdomain.com/">
+    <link rel="alternate" hreflang="x-default" href="https://yourdomain.com/">
+    <link rel="preload" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/LINE_logo.svg/120px-LINE_logo.svg.png" as="image" crossorigin>
 </head>
 <body>
     <header>
@@ -2628,7 +2668,7 @@
                     <li><a href="#services">服務項目</a></li>
                     <li><a href="#cases">成功案例</a></li>
                     <li><a href="#social">社群官方</a></li>
-                    <li><a href="https://lin.ee/JNJuJ7y">LINE諮詢</a></li>
+                    <li><a href="#consultation">聯絡我們</a></li>
                 </ul>
             </div>
         </nav>
@@ -2666,24 +2706,27 @@
             </div>
         </section>
 
-        <section class="cta-section">
-            <h2>立即線上諮詢</h2>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXFi_P1Xe9bp0HYapN0pD9VXXg7_1u7ykJ9t-V88pDokGQhg/viewform?usp=header"
-               class="google-form-btn"
-               target="_blank"
-               rel="noopener noreferrer"
-               referrerpolicy="no-referrer-when-downgrade"
-               aria-label="開啟Google諮詢表單"
-               role="button"
-               aria-describedby="form-description"
-               data-preview-image="https://img12.pixhost.to/images/1184/580049283_logo.png">
-                <img src="https://www.gstatic.com/images/branding/product/2x/forms_2020q4_48dp.png" 
-                     alt="Google表單圖示"
-                     width="40"
-                     height="40">
-                填寫諮詢表單
-            </a>
-            <p id="form-description" class="sr-only">此連結將在新視窗開啟外部Google表單</p>
+        <section id="consultation" class="consultation-anchor" aria-labelledby="consultationHeading">
+            <h2 id="consultationHeading" class="sr-only">線上諮詢表單</h2>
+            <section class="cta-section">
+                <h2>立即線上諮詢</h2>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXFi_P1Xe9bp0HYapN0pD9VXXg7_1u7ykJ9t-V88pDokGQhg/viewform?usp=header" 
+                   class="google-form-btn"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   referrerpolicy="no-referrer-when-downgrade"
+                   aria-label="開啟Google諮詢表單(新視窗)"
+                   role="button"
+                   aria-describedby="form-description"
+                   data-preview-image="https://img12.pixhost.to/images/1184/580049283_logo.png">
+                    <img src="https://www.gstatic.com/images/branding/product/2x/forms_2020q4_48dp.png" 
+                         alt="Google表單圖標"
+                         width="40"
+                         height="40">
+                    填寫諮詢表單
+                </a>
+                <p id="form-description" class="sr-only">此連結將在新視窗開啟外部Google表單</p>
+            </section>
         </section>
 
         <section id="services">
@@ -3036,10 +3079,16 @@
 
     <!-- 修改右下角快捷按鈕區塊 -->
     <div class="quick-access">
-        <a href="https://lin.ee/JNJuJ7y" class="quick-btn line" title="LINE諮詢">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/LINE_New_App_Icon_%282020-12%29.png" 
-                 alt="LINE官方圖示"
-                 class="line-icon">
+        <a href="https://lin.ee/JNJuJ7y" 
+           class="quick-btn line" 
+           title="LINE諮詢"
+           aria-label="LINE線上客服"
+           role="button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/LINE_logo.svg/120px-LINE_logo.svg.png" 
+                 alt="LINE官方諮詢"
+                 class="line-icon"
+                 width="50"
+                 height="50">
         </a>
     </div>
 
@@ -3739,11 +3788,46 @@
         const testData = {
             ogUrl: document.querySelector('meta[property="og:url"]').content,
             ogTitle: document.querySelector('meta[property="og:title"]').content,
-            ogImage: document.querySelector('meta[property="og:image"]').content
+            ogImage: document.querySelector('meta[property="og:image"]').content,
+            twitterImage: document.querySelector('meta[name="twitter:image"]').content
         };
         console.log('Social Preview Data:', testData);
         alert('OG標籤檢測完成，請查看控制台');
     }
+    </script>
+
+    <script>
+    // 處理錨點跳轉
+    document.querySelectorAll('a[href="#consultation"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('consultation').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+    });
+    </script>
+
+    <script>
+    // 錨點平滑滾動
+    document.querySelectorAll('a[href="#consultation"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.getElementById('consultation');
+            target.setAttribute('tabindex', '-1');
+            target.focus({ preventScroll: true });
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    </script>
+
+    <script>
+    document.querySelector('.quick-btn.line').addEventListener('click', () => {
+        gtag('event', 'line_click', { 
+            'event_category': 'conversion',
+            'event_label': 'new_line_icon'
+        });
+    });
     </script>
 </body>
 </html> 
