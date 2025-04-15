@@ -1,0 +1,35 @@
+const express = require('express');
+const app = express();
+const cors = require('cors');
+
+// 安全中介軟體
+app.use(cors({
+    origin: 'https://yourdomain.com',
+    methods: ['POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// CSRF保護範例
+const csrf = require('csurf');
+app.use(csrf({ cookie: true }));
+
+app.post('/submit', (req, res) => {
+    // 驗證CSRF令牌
+    if(!req.headers['x-csrf-token'] === req.cookies._csrf) {
+        return res.status(403).json({ error: 'Invalid CSRF token' });
+    }
+    
+    // 驗證資料
+    const { name, phone, amount } = req.body;
+    if(!name || !phone || !amount) {
+        return res.status(400).json({ error: '缺少必填字段' });
+    }
+    
+    // 儲存到資料庫
+    // ...
+    
+    res.json({ success: true });
+}); 
