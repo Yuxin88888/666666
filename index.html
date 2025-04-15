@@ -2442,6 +2442,32 @@
             color: #666;
             font-size: 0.9em;
         }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 1000;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image">
     <link rel="preload" href="https://picsum.photos/1920/540" as="image">
@@ -2543,7 +2569,8 @@
 
         <section id="consultation" class="consultation">
             <h2>免費專業諮詢</h2>
-            <form class="consult-form">
+            <form class="consult-form" method="POST">
+                <input type="hidden" name="csrf_token" value="YOUR_CSRF_TOKEN">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="name">姓名</label>
@@ -2635,6 +2662,11 @@
                             </button>
                         </div>
                     </div>
+                </div>
+                
+                <div class="loading" style="display:none;">
+                    <div class="loader"></div>
+                    <p>資料傳送中...</p>
                 </div>
                 
                 <button type="submit">立即送出申請</button>
@@ -3300,33 +3332,72 @@
         document.querySelector('.consult-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // 測試案例1: 空值提交
-            if(!document.getElementById('name').value) {
-                showStatus('❌ 姓名為必填字段', 'red');
+            const form = e.target;
+            const formData = new FormData(form);
+            const loading = document.querySelector('.loading');
+            
+            // 顯示載入動畫
+            loading.style.display = 'block';
+            
+            // 在submit事件頂部添加
+            const phoneRegex = /^09\d{8}$/;
+            if (!phoneRegex.test(formData.get('phone'))) {
+                showStatus('❌ 手機號碼格式不正確', 'red');
                 return;
             }
 
-            // 測試案例2: 驗證碼驗證
-            const inputCode = document.getElementById('captcha').value.toUpperCase();
-            if(inputCode !== currentCaptcha) {
-                showStatus('❌ 驗證碼錯誤', 'red');
-                generateCaptcha();
+            if (parseInt(formData.get('amount')) < 1) {
+                showStatus('❌ 金額不得低於1萬元', 'red');
                 return;
             }
+            
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': document.querySelector('[name=csrf_token]').value
+                    },
+                    body: JSON.stringify({
+                        name: formData.get('name'),
+                        phone: formData.get('phone'),
+                        amount: formData.get('amount'),
+                        loanType: formData.get('loanType'),
+                        time: formData.getAll('time')
+                    })
+                });
 
-            // 測試案例3: 模擬成功提交
-            showStatus('✅ 表單提交成功！3秒後重置...', 'green');
-            await new Promise(r => setTimeout(r, 3000));
-            e.target.reset();
-            generateCaptcha();
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const result = await response.json();
+                if(result.success) {
+                    showStatus('✅ 資料已發送！專員將盡快聯繫您', 'green');
+                    form.reset();
+                    generateCaptcha();
+                } else {
+                    throw new Error(result.error);
+                }
+                
+            } catch (error) {
+                console.error('傳送失敗:', error);
+                showStatus(`❌ 錯誤：${error.message}`, 'red');
+            } finally {
+                loading.style.display = 'none';
+            }
         });
 
         function showStatus(msg, color) {
             const statusEl = document.getElementById('formStatus');
-            statusEl.style.display = 'block';
-            statusEl.style.color = color;
-            statusEl.textContent = msg;
-            setTimeout(() => statusEl.style.display = 'none', 3000);
+            statusEl.innerHTML = `
+                <div style="padding:1rem; background:${color === 'green' ? '#f0fdf4' : '#fef2f2'}; 
+                           border:2px solid ${color === 'green' ? '#86efac' : '#fca5a5'};
+                           border-radius:8px;">
+                    <p style="margin:0; color:${color === 'green' ? '#15803d' : '#b91c1c'};">
+                        ${msg}
+                    </p>
+                </div>
+            `;
+            // ...保持原有邏輯
         }
 
         // 在現有的導航列互動效果代碼區塊後新增
