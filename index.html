@@ -1328,19 +1328,44 @@
             }
 
             nav ul {
-                display: none; /* 移動端預設隱藏導航列 */
-                width: 100%;
-                position: absolute;
-                top: 70px;
-                left: 0;
+                display: none;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
                 background: white;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+                z-index: 1000;
+                padding: 2rem;
             }
 
             nav.active ul {
-                display: flex;
-                flex-direction: column;
+                left: 0;
+                display: block;
             }
+
+            /* 遮罩層 */
+            .nav-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: none;
+                z-index: 999;
+            }
+
+            nav.active + .nav-overlay {
+                display: block;
+            }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         /* 電腦版導航樣式保持不變 */
@@ -2557,6 +2582,11 @@
         }
         .hamburger.is-active .line:nth-child(3) {
             transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* 禁止滾動 */
+        .no-scroll {
+            overflow: hidden;
         }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
@@ -3830,12 +3860,28 @@
     function initHamburger() {
         const hamburger = document.querySelector('.hamburger');
         const nav = document.querySelector('nav');
-        
+        const body = document.body;
+        const overlay = document.createElement('div');
+        overlay.className = 'nav-overlay';
+        nav.parentNode.insertBefore(overlay, nav.nextSibling);
+
         if (window.innerWidth <= 768) {
             hamburger.addEventListener('click', () => {
                 nav.classList.toggle('active');
-                // 添加點擊動畫
-                hamburger.classList.toggle('is-active');
+                body.classList.toggle('no-scroll');
+            });
+
+            overlay.addEventListener('click', () => {
+                nav.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+
+            // ESC鍵關閉
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && nav.classList.contains('active')) {
+                    nav.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                }
             });
         }
     }
