@@ -412,11 +412,14 @@
         }
 
         .nav-container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            align-items: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .nav-wrapper {
+            display: contents; /* 保持原有佈局 */
         }
 
         .logo {
@@ -490,6 +493,10 @@
             .qr-code img {
                 width: 120px;
                 height: 120px;
+            }
+
+            .nav-wrapper {
+                position: static;
             }
         }
 
@@ -2581,6 +2588,31 @@
                 display: flex !important;
             }
         }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                order: 2; /* 將按鈕移至右側 */
+            }
+
+            #nav-menu {
+                position: fixed;
+                top: 60px;
+                right: 0;
+                width: 200px;
+                height: auto;
+                background: #e1f0ff;
+                box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+                border-radius: 4px 0 0 4px;
+                z-index: 1000;
+            }
+
+            .nav-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+        }
     </style>
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(min-width: 601px)">
     <link rel="preload" href="https://img12.pixhost.to/images/1184/580049283_logo.png" as="image" media="(max-width: 600px)">
@@ -2669,17 +2701,22 @@
 <body>
     <header>
         <nav aria-label="主要導航">
-            <button class="hamburger" aria-expanded="false" aria-controls="nav-menu">
-                <span class="menu-text">選單</span>
-            </button>
             <div class="nav-container">
-                <ul id="nav-menu">
-                    <li><a href="#services">服務項目</a></li>
-                    <li><a href="#about">關於我們</a></li>
-                    <li><a href="#cases">成功案例</a></li>
-                    <li><a href="#social">社群官方</a></li>
-                    <li><a href="#consultation">聯絡我們</a></li>
-                </ul>
+                <a href="#" class="logo">
+                    <img src="logo.png" alt="公司Logo">
+                </a>
+                <button class="hamburger" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="menu-text">選單</span>
+                </button>
+                <div class="nav-wrapper">
+                    <ul id="nav-menu">
+                        <li><a href="#services">服務項目</a></li>
+                        <li><a href="#about">關於我們</a></li>
+                        <li><a href="#cases">成功案例</a></li>
+                        <li><a href="#social">社群官方</a></li>
+                        <li><a href="#consultation">聯絡我們</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -3848,12 +3885,21 @@
         const menu = document.getElementById('nav-menu');
 
         if (window.innerWidth <= 768) {
-            hamburger.addEventListener('click', () => {
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
                 hamburger.setAttribute('aria-expanded', !isExpanded);
-                menu.style.display = isExpanded ? 'none' : 'block';
+                menu.style.right = isExpanded ? '-200px' : '0';
             });
         }
+
+        // 點擊外部區域關閉菜單
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#nav-menu') && !e.target.closest('.hamburger')) {
+                hamburger.setAttribute('aria-expanded', 'false');
+                menu.style.right = '-200px';
+            }
+        });
     }
 
     // 視窗大小改變時重新初始化
