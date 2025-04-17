@@ -1,0 +1,50 @@
+<div class="case-card" data-modal="caseModal5">
+    <img src="https://i.pinimg.com/736x/91/48/54/9148549d97d8d4f0faa9e119a5fe8eea.jpg"
+         alt="企業增貸轉貸成功案例示意圖"
+         loading="lazy">
+    <div class="case-overlay">
+        <h3>增貸轉貸成功案例</h3>
+        <p>快速取得營運資金，專業財務規劃</p>
+        <button class="case-detail-btn">查看詳情</button>
+    </div>
+</div>
+
+/* 新增手機版文字大小調整 */
+@media (max-width: 480px) {
+    .case-overlay h3 {
+        font-size: 1.1rem !important;
+        line-height: 1.3;
+    }
+    .case-overlay p {
+        font-size: 0.85rem;
+    }
+}
+
+/* 加強圖片載入過渡效果 */
+.case-img {
+    transition: opacity 0.3s ease;
+}
+.case-img[loading="lazy"] {
+    opacity: 0;
+}
+.case-img.loaded {
+    opacity: 1;
+}
+
+// 新增圖片載入監聽
+document.querySelectorAll('.case-img').forEach(img => {
+    if(img.complete) {
+        img.classList.add('loaded');
+    } else {
+        img.addEventListener('load', () => img.classList.add('loaded'));
+    }
+});
+
+// 加強無障礙焦點管理
+document.querySelectorAll('.case-card').forEach(card => {
+    card.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') {
+            card.click();
+        }
+    });
+}); 
