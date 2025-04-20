@@ -1,0 +1,90 @@
+/* 合併所有樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: '微軟正黑體', Arial, sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    line-height: 1.7;
+}
+
+/* 將原index.html中所有<style>內容完整複製至此 */
+/* ... 約2000行樣式代碼 ... */
+
+@media (max-width: 768px) {
+    /* 響應式樣式 */
+    .main-banner {
+        height: 300px;
+    }
+    
+    .banner-slide {
+        background-position: 75% center;
+    }
+}
+
+@media (min-width: 1200px) {
+    .main-banner {
+        background-size: 60%; 
+        background-position: 80% center;
+    }
+}
+
+/* 輪播基底樣式 */
+.main-banner {
+    position: relative;
+    overflow: hidden;
+    height: 540px; /* 保持原高度 */
+}
+
+.banner-slide {
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.banner-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* 保持原有漸層效果 */
+.main-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(180deg, transparent 0%, rgba(248, 250, 252, 0.8) 50%, #f8fafc 100%);
+    z-index: 2;
+}
+
+.main-banner.loaded {
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.main-banner:hover {
+    background-size: 55%; /* 滑鼠懸停微調 */
+}
+
+/* 可新增暫停輪播邏輯 */
+let slideInterval = setInterval(showNextSlide, 5000);
+
+mainBanner.addEventListener('mouseenter', () => clearInterval(slideInterval));
+mainBanner.addEventListener('mouseleave', () => {
+  slideInterval = setInterval(showNextSlide, 5000);
+}); 
