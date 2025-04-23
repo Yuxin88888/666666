@@ -1,0 +1,68 @@
+{
+    "backupWorkspaces": {
+        "workspaces": [],
+        "folders": [
+            {
+                "folderUri": "file:///c%3A/Users/user/Desktop/%E6%96%B0%E5%A2%9E%E8%B3%87%E6%96%99%E5%A4%BE%20%285%29"
+            }
+        ],
+        "emptyWindows": []
+    },
+    "lastModified": "2025-04-17T15:49:30Z",
+    "profileAssociations": {
+        "emptyWindows": {},
+        "workspaces": {
+            "file:///c%3A/Users/user/Desktop/%E6%96%B0%E5%A2%9E%E8%B3%87%E6%96%99%E5%A4%BE%20%285%29": "__default__profile__"
+        }
+    },
+    "profileAssociationsMigration": true,
+    "telemetry.devDeviceId": "61757468-307c-7573-6572-5f30314a5259",
+    "telemetry.macMachineId": "61757468307c757365725f30314a52595754414a433547415843325a534d324259474e5954",
+    "telemetry.machineId": "61757468307c757365725f30314a52595754414a433547415843325a534d324259474e5954",
+    "telemetry.sqmId": "{61757468-307C-7573-6572-5F30314A5259}",
+    "theme": "vs-dark",
+    "themeBackground": "#1a1a1a",
+    "userDataProfilesMigration": true,
+    "version": "1.0.1",
+    "windowControlHeight": 35,
+    "windowSplash": {
+        "zoomLevel": 0,
+        "baseTheme": "vs-dark",
+        "colorInfo": {
+            "foreground": "rgba(204, 204, 204, 0.87)",
+            "background": "#1a1a1a",
+            "editorBackground": "#1a1a1a",
+            "titleBarBackground": "#141414",
+            "titleBarBorder": "rgba(255, 255, 255, 0.05)",
+            "activityBarBackground": "#141414",
+            "sideBarBackground": "#141414",
+            "sideBarBorder": "rgba(255, 255, 255, 0.05)",
+            "statusBarBackground": "#141414",
+            "statusBarBorder": "rgba(255, 255, 255, 0.05)",
+            "statusBarNoFolderBackground": "#141414"
+        },
+        "layoutInfo": {
+            "sideBarSide": "left",
+            "editorPartMinWidth": 220,
+            "titleBarHeight": 35,
+            "activityBarWidth": 0,
+            "sideBarWidth": 256,
+            "statusBarHeight": 22,
+            "windowBorder": false
+        }
+    },
+    "windowsState": {
+        "lastActiveWindow": {
+            "folder": "file:///c%3A/Users/user/Desktop/%E6%96%B0%E5%A2%9E%E8%B3%87%E6%96%99%E5%A4%BE%20%285%29",
+            "backupPath": "C:\\Users\\user\\AppData\\Roaming\\Cursor\\Backups\\c5c552c012bfb825d1e6d6295223f689",
+            "uiState": {
+                "mode": 0,
+                "x": 448,
+                "y": 156,
+                "width": 1024,
+                "height": 768
+            }
+        },
+        "openedWindows": []
+    }
+}
