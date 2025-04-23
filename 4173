@@ -1,3 +1,0 @@
-let touchStartX = 0;  // 此處重複宣告
-// 建議修改為：
-touchStartX = 0;  // 移除 let 宣告 
