@@ -4185,5 +4185,138 @@
         setInterval(nextSlide, 5000);
     });
     </script>
+
+    <!-- 新增個人貸款彈窗 -->
+    <div id="personalLoanModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-credit-card"></i>
+                <h3>個人信用貸款方案</h3>
+            </div>
+            <div class="modal-body">
+                <div class="loan-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>無擔保品需求</h4>
+                        <p>免抵押任何資產，純信用審核</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-percent"></i>
+                        <h4>優惠利率1.68%起</h4>
+                        <p>業界最具競爭力費率</p>
+                    </div>
+                </div>
+                
+                <div class="loan-details">
+                    <p>無論是應急支出還是計劃中的大額消費，個人貸款讓您輕鬆解決各類需求。無需抵押物，且審核簡便，您可以信賴這筆資金隨時為您的生活增添便利。</p>
+                    
+                    <ul class="advantage-list">
+                        <li><i class="fas fa-clock"></i> 最快24小時核貸</li>
+                        <li><i class="fas fa-file-alt"></i> 簡化申請流程</li>
+                        <li><i class="fas fa-calendar-alt"></i> 還款期數1-7年</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="consult-btn" onclick="window.open('https://lin.ee/JNJuJ7y', '_blank')">
+                    <i class="fas fa-comments"></i>
+                    立即免費諮詢
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // 在現有的服務卡點擊事件中新增
+    document.querySelectorAll('.service-card').forEach(card => {
+        const title = card.querySelector('h3').textContent;
+        if(title === '個人信用貸款') {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                document.getElementById('personalLoanModal').style.display = 'block';
+            });
+        }
+    });
+    </script>
+
+    <!-- 彈窗控制邏輯 -->
+    <script>
+    let currentModal = null;
+
+    function openLoanModal() {
+      currentModal = document.getElementById('personalLoanModal');
+      currentModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      
+      // GA事件追蹤
+      if(typeof gtag === 'function') {
+        gtag('event', 'loan_modal_open', {
+          'event_category': 'Conversion',
+          'event_label': 'Personal Loan'
+        });
+      }
+    }
+
+    function closeModal() {
+      if(currentModal) {
+        currentModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        
+        // GA事件追蹤
+        if(typeof gtag === 'function') {
+          gtag('event', 'loan_modal_close', {
+            'event_category': 'Conversion',
+            'event_label': 'Personal Loan'
+          });
+        }
+      }
+    }
+
+    // 點擊外部關閉
+    document.addEventListener('click', (e) => {
+      if(e.target.closest('.modal-overlay')) {
+        closeModal();
+      }
+    });
+
+    // ESC鍵關閉
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // 服務卡點擊綁定
+    document.querySelectorAll('.service-card').forEach(card => {
+      if(card.querySelector('h3').textContent.includes('個人信用貸款')) {
+        card.addEventListener('click', openLoanModal);
+      }
+    });
+
+    // 諮詢按鈕追蹤
+    function trackEvent(action) {
+      if(typeof gtag === 'function') {
+        gtag('event', action, {
+          'event_category': 'Conversion',
+          'event_label': 'Loan Consultation'
+        });
+      }
+    }
+    </script>
+
+    <div id="cookieConsent" class="cookie-banner">
+      <p>本網站使用Cookies以提供最佳瀏覽體驗。<a href="/privacy">隱私權政策</a></p>
+      <button onclick="acceptCookies()">同意</button>
+    </div>
+
+    <script>
+    function acceptCookies() {
+      gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+      });
+      document.getElementById('cookieConsent').style.display = 'none';
+    }
+    </script>
 </body>
 </html> 
